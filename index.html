@@ -1,13 +1,355 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop All – DONUTLAB</title>
-    <link rel="stylesheet" href="style.css">
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #111;
+        }
+
+        /* Announcement Bar */
+        .announcement-bar {
+            background-color: #f7f35b;
+            text-align: center;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Header */
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .main-nav a, .header-right a {
+            text-decoration: none;
+            color: #222;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .logo {
+            font-size: 28px;
+            letter-spacing: 2px;
+            color: #2bb673;
+            font-weight: 700;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #f4f4f4;
+            padding: 8px 15px;
+            border-radius: 20px;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 14px;
+        }
+
+        /* Collection Header */
+        .collection-header {
+            text-align: center;
+            padding: 30px 20px 10px;
+        }
+
+        .breadcrumbs {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .breadcrumbs span {
+            color: #222;
+            font-weight: 600;
+        }
+
+        .collection-header h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .filter-icon-btn, .sort-btn, .category-chip {
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            background: #fff;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .category-chip.active {
+            background-color: #2bb673;
+            color: #fff;
+            border-color: #2bb673;
+        }
+
+        /* Product Grid */
+        .product-grid-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: #f7f9f6;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            border: 1px solid #eef2ed;
+        }
+
+        .product-image-wrap {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image-wrap img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #a3e4d7;
+            color: #111;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .product-info h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 15px;
+            color: #222;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .options-dots {
+            display: flex;
+            gap: 6px;
+            margin: 10px 0 5px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .options-text {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .price-tag {
+            font-size: 15px;
+            font-weight: 700;
+            margin: 12px 0;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-weight: 400;
+            margin-right: 5px;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .card-buttons button {
+            flex: 1;
+            padding: 10px 5px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-subscribe {
+            background: #111;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-onetime {
+            background: #fff;
+            border: 1px solid #ccc;
+            color: #111;
+        }
+
+        /* Footer Shopping Icons Section */
+        .footer-shopping {
+            text-align: center;
+            padding: 60px 20px;
+            background: #fff;
+        }
+
+        .footer-shopping h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .footer-shop-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .shop-icon-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #eef5f1;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: #222;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        /* Main Footer */
+        .site-footer {
+            background: #00b06b;
+            color: #fff;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            padding: 60px 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 14px;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .footer-col p {
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            background: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            max-width: 300px;
+        }
+
+        .newsletter-form input {
+            border: none;
+            padding: 10px;
+            outline: none;
+            flex: 1;
+            font-size: 13px;
+        }
+
+        .newsletter-form button {
+            background: transparent;
+            border: none;
+            padding: 0 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 18px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 13px;
+        }
+    </style>
 </head>
 <body>
 
